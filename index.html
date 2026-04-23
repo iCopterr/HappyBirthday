@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <!-- Beautiful Cute Thai/English Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #fdf5f8;
+            font-family: 'Mali', cursive;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        /* Ambient Glowing Background Shapes */
+        .bg-shape {
+            position: absolute;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.6;
+            border-radius: 50%;
+            animation: floatShape 15s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        .shape1 {
+            width: 55vw;
+            height: 55vw;
+            background: #ffb3d9;
+            top: -15vh;
+            left: -10vw;
+            animation-delay: 0s;
+        }
+
+        .shape2 {
+            width: 65vw;
+            height: 65vw;
+            background: #b3d9ff;
+            bottom: -20vh;
+            right: -15vw;
+            animation-delay: -5s;
+        }
+
+        .shape3 {
+            width: 45vw;
+            height: 45vw;
+            background: #ffe699;
+            top: 25vh;
+            left: 35vw;
+            animation-delay: -10s;
+        }
+
+        .shape4 {
+            width: 40vw;
+            height: 40vw;
+            background: #e6ccff;
+            bottom: 10vh;
+            left: 5vw;
+            animation-delay: -2s;
+        }
+
+        /* Cute dot pattern overlay */
+        .bg-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-image: radial-gradient(rgba(255, 102, 163, 0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #lights-out-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #050505;
+            z-index: 5;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            pointer-events: none;
+        }
+
+        @keyframes floatShape {
+            0% {
+                transform: translate(0, 0) scale(1) rotate(0deg);
+            }
+
+            50% {
+                transform: translate(5vw, -5vh) scale(1.1) rotate(15deg);
+            }
+
+            100% {
+                transform: translate(-5vw, 5vh) scale(0.9) rotate(-15deg);
+            }
+        }
+
+        .container {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Gift Box */
+        #gift-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .gift-wrapper {
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.2s ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        .gift-wrapper:hover {
+            transform: scale(1.05);
+            animation: float 3s ease-in-out infinite, shake 0.5s ease-in-out infinite;
+        }
+
+        #box-lid {
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease-out;
+        }
+
+        #box-body {
+            transition: transform 0.6s ease-in, opacity 0.5s ease-out;
+        }
+
+        .lid-open {
+            transform: translateY(-80px) rotate(15deg) !important;
+            opacity: 0;
+        }
+
+        .box-open {
+            transform: scale(0.8) translateY(30px) !important;
+            opacity: 0;
+        }
+
+        /* Cake */
+        #cake-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #cake {
+            transform: scale(0);
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+        .cake-pop-in {
+            animation: popIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+
+        .cake-explode {
+            animation: explode 0.8s forwards;
+            pointer-events: none;
+        }
+
+        /* Flame Animation */
+        .flame {
+            animation: flicker 0.15s ease-in-out infinite alternate;
+        }
+
+        #flames {
+            transition: all 0.5s ease;
+        }
+
+        .flames-out {
+            transform: translateY(-20px) scale(0) !important;
+            opacity: 0 !important;
+            transition: all 0.6s cubic-bezier(0.55, 0.085, 0.68, 0.53) !important;
+        }
+
+        /* Typography & Buttons */
+        .main-text {
+            font-size: 3.5rem;
+            color: #ff4d88;
+            margin-top: 15px;
+            font-weight: 700;
+            /* Nice thick stroke effect with shadow */
+            text-shadow:
+                -2px -2px 0 #fff,
+                2px -2px 0 #fff,
+                -2px 2px 0 #fff,
+                2px 2px 0 #fff,
+                5px 5px 15px rgba(255, 105, 180, 0.4);
+            transition: all 0.4s ease;
+            letter-spacing: 1px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #wish-button {
+            display: none;
+            margin-top: 30px;
+            padding: 15px 50px;
+            font-size: 1.8rem;
+            font-family: 'Mali', cursive;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff99cc 0%, #ff66a3 100%);
+            color: white;
+            border: 4px solid #fff;
+            border-radius: 50px;
+            cursor: pointer;
+            /* 3D Jelly Button effect */
+            box-shadow: 0 8px 0px #e6397c, 0 15px 25px rgba(255, 102, 163, 0.4);
+            transition: all 0.1s ease;
+            position: relative;
+        }
+
+        #wish-button:hover {
+            transform: translateY(2px);
+            box-shadow: 0 6px 0px #e6397c, 0 10px 20px rgba(255, 102, 163, 0.4);
+            filter: brightness(1.05);
+        }
+
+        #wish-button:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0px #e6397c, 0 5px 10px rgba(255, 102, 163, 0.4);
+        }
+
+        /* Final Step */
+        #final-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .final-message {
+            font-size: 3rem;
+            line-height: 1.6;
+            color: #ff3385;
+            font-weight: 700;
+            text-align: center;
+            padding: 30px 45px;
+            /* Glassmorphism card - more transparent */
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 40px;
+            box-shadow:
+                0 20px 50px rgba(255, 102, 163, 0.2),
+                inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            animation: popIn 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            max-width: 80vw;
+            z-index: 20;
+            text-shadow: 1px 1px 0px #fff;
+        }
+
+        /* Background & Animations */
+        #background-images {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .floating-img {
+            position: absolute;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(255, 105, 180, 0.3);
+            object-fit: cover;
+            border: 6px solid #fff;
+            opacity: 0;
+            animation: floatUpLoop 15s linear infinite;
+        }
+
+        @keyframes floatUpLoop {
+            0% {
+                transform: translateY(110vh) rotate(-10deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-40vh) rotate(15deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(5deg);
+            }
+
+            50% {
+                transform: rotate(0deg);
+            }
+
+            75% {
+                transform: rotate(-5deg);
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes explode {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes slowUpDown {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes flicker {
+            0% {
+                transform: scale(1) rotate(-1deg);
+            }
+
+            100% {
+                transform: scale(1.1) rotate(2deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Ambient Animated Background -->
+    <div class="bg-shape shape1"></div>
+    <div class="bg-shape shape2"></div>
+    <div class="bg-shape shape3"></div>
+    <div class="bg-shape shape4"></div>
+    <div class="bg-pattern"></div>
+    <div id="lights-out-overlay"></div>
+
+    <!-- EDIT HERE -->
+    <div id="editable-config" style="display: none;">
+        <!-- Editable Name -->
+        <span id="birthdayName">ข้าวปุ้น</span>
+
+        <!-- Editable Birthday Message -->
+        <div id="birthdayMessage">
+            Happy Birthday นะข้าวปุ้น 🎉<br>
+            ขอให้มีความสุขมากๆ สุขภาพแข็งแรง<br>
+            ขอให้มีแซลม่อนกินเย้อๆๆ<br>
+            ขอให้เจอคนใจดีๆในชีวิตตลอดเลยนะะ <br>
+            ถ้าเจอคนใจร้ายเดี๋ยวเค้าปลอบเองง 💖
+        </div>
+
+        <!-- Editable Images (Add or remove img tags as needed) -->
+        <div id="editable-images">
+            <img src="image/khaopun1.jpg" alt="Memory 1">
+            <img src="image/khaopun2.jpg" alt="Memory 2">
+            <img src="image/khaopun3.jpg" alt="Memory 3">
+            <img src="image/khaopun4.jpg" alt="Memory 4">
+            <img src="image/khaopun5.jpg" alt="Memory 5">
+        </div>
+    </div>
+    <!-- END EDIT HERE -->
+
+    <div id="background-images"></div>
+
+    <div class="container">
+        <!-- Step 1 -->
+        <div id="gift-container">
+            <div class="gift-wrapper" id="gift-click">
+                <svg viewBox="0 0 200 200" width="280" height="280">
+                    <defs>
+                        <linearGradient id="boxGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ff4757" />
+                            <stop offset="100%" stop-color="#ff6b81" />
+                        </linearGradient>
+                        <linearGradient id="ribbonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#eccc68" />
+                            <stop offset="100%" stop-color="#ffa502" />
+                        </linearGradient>
+                        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="5" stdDeviation="5" flood-opacity="0.2" />
+                        </filter>
+                    </defs>
+
+                    <g id="box-body" style="transform-origin: 100px 130px;">
+                        <ellipse cx="100" cy="180" rx="60" ry="15" fill="rgba(0,0,0,0.1)" />
+                        <rect x="40" y="80" width="120" height="100" rx="8" fill="url(#boxGrad)"
+                            filter="url(#shadow)" />
+                        <rect x="85" y="80" width="30" height="100" fill="url(#ribbonGrad)" />
+                        <rect x="40" y="115" width="120" height="25" fill="url(#ribbonGrad)" />
+                    </g>
+
+                    <g id="box-lid" style="transform-origin: 100px 55px;">
+                        <rect x="30" y="55" width="140" height="30" rx="5" fill="url(#boxGrad)" filter="url(#shadow)" />
+                        <rect x="85" y="55" width="30" height="30" fill="url(#ribbonGrad)" />
+                        <path d="M 100 55 C 60 10, 30 50, 85 55 Z" fill="url(#ribbonGrad)" />
+                        <path d="M 100 55 C 140 10, 170 50, 115 55 Z" fill="url(#ribbonGrad)" />
+                        <circle cx="100" cy="55" r="8" fill="#ffa502" />
+                    </g>
+                </svg>
+            </div>
+            <div class="main-text">Click me</div>
+        </div>
+
+        <!-- Step 2 & 3 -->
+        <div id="cake-container">
+            <div id="cake">
+                <svg viewBox="0 0 200 200" width="350" height="350">
+                    <defs>
+                        <linearGradient id="cakeTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#fff0f5" />
+                            <stop offset="100%" stop-color="#ffb6c1" />
+                        </linearGradient>
+                        <linearGradient id="cakeBottom" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#ffb6c1" />
+                            <stop offset="100%" stop-color="#ff69b4" />
+                        </linearGradient>
+                        <linearGradient id="plate" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#f5f5f5" />
+                            <stop offset="50%" stop-color="#ffffff" />
+                            <stop offset="100%" stop-color="#e0e0e0" />
+                        </linearGradient>
+                        <filter id="cakeShadow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feDropShadow dx="0" dy="8" stdDeviation="6" flood-opacity="0.2" />
+                        </filter>
+                        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="2" result="blur" />
+                            <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                            </feMerge>
+                        </filter>
+                    </defs>
+
+                    <g id="cake-body" style="transition: filter 1s ease;">
+                        <ellipse cx="100" cy="175" rx="85" ry="22" fill="url(#plate)" filter="url(#cakeShadow)" />
+                        <ellipse cx="100" cy="180" rx="80" ry="20" fill="#cccccc" />
+
+                        <path d="M 35 165 Q 100 185 165 165 L 165 115 Q 100 135 35 115 Z" fill="url(#cakeBottom)"
+                            filter="url(#cakeShadow)" />
+                        <ellipse cx="100" cy="115" rx="65" ry="16" fill="#ff99cc" />
+
+                        <path
+                            d="M 35 165 Q 45 175 50 168 Q 60 178 65 170 Q 75 180 80 172 Q 90 182 95 174 Q 105 184 110 174 Q 120 182 125 172 Q 135 180 140 170 Q 150 178 155 168 Q 160 175 165 165"
+                            fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" />
+
+                        <path d="M 50 115 Q 100 130 150 115 L 150 65 Q 100 80 50 65 Z" fill="url(#cakeTop)"
+                            filter="url(#cakeShadow)" />
+                        <ellipse cx="100" cy="65" rx="50" ry="12" fill="#ffffff" />
+
+                        <path
+                            d="M 50 65 Q 100 80 150 65 Q 145 85 135 80 Q 125 95 115 80 Q 105 100 95 83 Q 85 105 75 83 Q 65 95 55 80 Q 52 85 50 65 Z"
+                            fill="#ffffff" />
+
+                        <g id="candles">
+                            <rect x="72" y="35" width="6" height="30" fill="#feca57" rx="2" />
+                            <path d="M 72 40 L 78 35 L 78 40 L 72 45 Z" fill="#ff9f43" />
+
+                            <rect x="97" y="25" width="6" height="35" fill="#feca57" rx="2" />
+                            <path d="M 97 30 L 103 25 L 103 30 L 97 35 Z" fill="#ff9f43" />
+
+                            <rect x="122" y="35" width="6" height="30" fill="#feca57" rx="2" />
+                            <path d="M 122 40 L 128 35 L 128 40 L 122 45 Z" fill="#ff9f43" />
+                        </g>
+                    </g>
+
+                    <g id="flames" filter="url(#glow)">
+                        <g class="flame" style="transform-origin: 75px 33px;">
+                            <path d="M 75 33 Q 72 25 75 16 Q 78 25 75 33" fill="#ff9f43" />
+                            <path d="M 75 31 Q 73 27 75 21 Q 77 27 75 31" fill="#feca57" />
+                        </g>
+                        <g class="flame" style="transform-origin: 100px 23px; animation-delay: 0.1s;">
+                            <path d="M 100 23 Q 97 15 100 6 Q 103 15 100 23" fill="#ff9f43" />
+                            <path d="M 100 21 Q 98 17 100 11 Q 102 17 100 21" fill="#feca57" />
+                        </g>
+                        <g class="flame" style="transform-origin: 125px 33px; animation-delay: 0.2s;">
+                            <path d="M 125 33 Q 122 25 125 16 Q 128 25 125 33" fill="#ff9f43" />
+                            <path d="M 125 31 Q 123 27 125 21 Q 127 27 125 31" fill="#feca57" />
+                        </g>
+                    </g>
+                </svg>
+            </div>
+            <div class="main-text" id="cake-text">เป่าเทียน</div>
+            <button id="wish-button">อธิษฐานแล้ว</button>
+        </div>
+
+        <!-- Step 4 -->
+        <div id="final-container">
+            <div class="final-message" id="final-message-display"></div>
+        </div>
+    </div>
+
+    <script>
+        const giftContainer = document.getElementById('gift-container');
+        const giftWrapper = document.getElementById('gift-click');
+        const boxLid = document.getElementById('box-lid');
+        const boxBody = document.getElementById('box-body');
+
+        const cakeContainer = document.getElementById('cake-container');
+        const cake = document.getElementById('cake');
+        const flames = document.getElementById('flames');
+
+        const cakeText = document.getElementById('cake-text');
+        const wishButton = document.getElementById('wish-button');
+        const finalContainer = document.getElementById('final-container');
+        const finalMessageDisplay = document.getElementById('final-message-display');
+        const backgroundImagesContainer = document.getElementById('background-images');
+
+        const birthdayName = document.getElementById('birthdayName').innerText;
+        const birthdayMessageHTML = document.getElementById('birthdayMessage').innerHTML;
+        const sourceImages = Array.from(document.getElementById('editable-images').getElementsByTagName('img')).map(img => img.src);
+
+        let step = 1;
+
+        giftWrapper.addEventListener('click', () => {
+            if (step === 1) {
+                boxLid.classList.add('lid-open');
+                boxBody.classList.add('box-open');
+
+                setTimeout(() => {
+                    const lightsOut = document.getElementById('lights-out-overlay');
+                    const cakeBody = document.getElementById('cake-body');
+
+                    // Pitch black
+                    lightsOut.style.opacity = '1';
+                    cakeBody.style.filter = 'brightness(0)';
+
+                    giftContainer.style.display = 'none';
+                    cakeContainer.style.display = 'flex';
+
+                    cakeText.style.opacity = '0';
+
+                    const flamesList = document.querySelectorAll('.flame');
+                    flamesList.forEach(f => {
+                        f.style.opacity = '0';
+                        f.style.transform = 'scale(0)';
+                        f.style.animation = 'none';
+                    });
+
+                    cake.classList.add('cake-pop-in');
+
+                    // Sequential lighting
+                    setTimeout(() => lightCandle(0, flamesList, lightsOut, cakeBody), 1200);
+                    setTimeout(() => lightCandle(1, flamesList, lightsOut, cakeBody), 2000);
+                    setTimeout(() => lightCandle(2, flamesList, lightsOut, cakeBody), 2800);
+
+                    // Final lights on
+                    setTimeout(() => {
+                        lightsOut.style.opacity = '0';
+                        cakeText.style.opacity = '1';
+                        step = 2;
+                    }, 3600);
+
+                }, 600);
+            }
+        });
+
+        function lightCandle(index, list, lightsOut, cakeBody) {
+            const f = list[index];
+            f.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            f.style.transform = 'scale(1)';
+            f.style.opacity = '1';
+
+            // Adjust lighting incrementally
+            if (index === 0) {
+                lightsOut.style.opacity = '0.8';
+                cakeBody.style.filter = 'brightness(0.3)';
+            } else if (index === 1) {
+                lightsOut.style.opacity = '0.5';
+                cakeBody.style.filter = 'brightness(0.6)';
+            } else if (index === 2) {
+                lightsOut.style.opacity = '0.2';
+                cakeBody.style.filter = 'brightness(1)';
+            }
+
+            setTimeout(() => {
+                f.style.animation = 'flicker 0.15s ease-in-out infinite alternate';
+            }, 500);
+        }
+
+        cake.addEventListener('click', (e) => {
+            if (step === 2 && e.target !== wishButton) {
+                // Blow out flames with smooth effect
+                flames.classList.add('flames-out');
+
+                // Dim background slightly for effect
+                document.body.style.transition = 'background-color 1.5s ease';
+                document.body.style.backgroundColor = '#f2e8ec';
+
+                // Fade out old text
+                cakeText.style.opacity = '0';
+                cakeText.style.transform = 'translateY(10px)';
+
+                setTimeout(() => {
+                    // Change text and fade back in
+                    cakeText.innerText = 'อธิษฐานรึยัง ' + birthdayName + '?';
+                    cakeText.style.opacity = '1';
+                    cakeText.style.transform = 'translateY(0)';
+
+                    wishButton.style.display = 'block';
+                    wishButton.style.animation = 'popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
+                }, 500);
+
+                step = 3;
+            }
+        });
+
+        wishButton.addEventListener('click', () => {
+            if (step === 3) {
+                cake.classList.remove('cake-pop-in');
+                cake.classList.add('cake-explode');
+                cakeText.style.display = 'none';
+                wishButton.style.display = 'none';
+
+                setTimeout(() => {
+                    cakeContainer.style.display = 'none';
+                    showFinalStep();
+                }, 800);
+            }
+        });
+
+        function showFinalStep() {
+            finalMessageDisplay.innerHTML = birthdayMessageHTML;
+            finalContainer.style.display = 'flex';
+            spawnImages();
+        }
+
+        function spawnImages() {
+            if (sourceImages.length === 0) return;
+
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+
+            sourceImages.forEach((src, index) => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'floating-img';
+
+                const size = Math.random() * 150 + 200; // Size between 200px and 350px
+                img.style.width = size + 'px';
+                img.style.height = size + 'px';
+
+                const isLeft = index % 2 === 0;
+                const randomX = isLeft
+                    ? Math.random() * (viewportWidth * 0.35)
+                    : viewportWidth - (Math.random() * (viewportWidth * 0.35)) - size;
+
+                img.style.left = randomX + 'px';
+                // Remove top styling since CSS animation floatUpLoop handles vertical movement
+                img.style.animationDelay = (Math.random() * 5) + 's';
+                img.style.animationDuration = (Math.random() * 10 + 10) + 's'; // random speed between 10s and 20s
+
+                backgroundImagesContainer.appendChild(img);
+            });
+        }
+    </script>
+</body>
+
+</html>
